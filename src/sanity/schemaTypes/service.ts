@@ -1,5 +1,6 @@
 import { defineType, defineField } from 'sanity'
 
+// 👇 REMARQUE BIEN : "export const service" (et pas "export default")
 export const service = defineType({
   name: 'service',
   title: 'Service',
@@ -7,7 +8,7 @@ export const service = defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Titre du service',
       type: 'string',
     }),
     defineField({
@@ -15,6 +16,5 @@ export const service = defineType({
       title: 'Description',
       type: 'text',
     }),
-    // Tu pourras ajouter d'autres champs plus tard
   ],
 })
