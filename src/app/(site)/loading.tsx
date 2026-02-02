@@ -1,16 +1,16 @@
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white">
-      {/* Animation des cercles (Spinner) */}
-      <div className="relative flex items-center justify-center mb-4">
-        {/* Cercle Bleu Extérieur */}
-        <div className="w-16 h-16 border-4 border-conte-blue/20 border-t-conte-blue rounded-full animate-spin"></div>
-        {/* Cercle Orange Intérieur */}
-        <div className="absolute w-8 h-8 border-4 border-conte-orange/20 border-b-conte-orange rounded-full animate-spin-reverse"></div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+      <div className="relative flex items-center justify-center">
+        {/* Cercle extérieur */}
+        <div className="h-16 w-16 animate-spin rounded-full border-4 border-gray-200"></div>
+        
+        {/* Cercle intérieur (couleur principale) */}
+        <div className="absolute h-16 w-16 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+        
+        {/* Optionnel : Logo ou icône au centre */}
+        {/* <span className="absolute text-xs font-bold text-blue-600">CC</span> */}
       </div>
-      
-      {/* Petit texte rassurant */}
-      <p className="text-conte-blue font-bold animate-pulse">Chargement...</p>
     </div>
   );
 }
