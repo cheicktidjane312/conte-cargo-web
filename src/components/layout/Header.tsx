@@ -46,7 +46,14 @@ export default function Header() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-conte-orange transition-all group-hover:w-full"></span>
             </Link>
           ))}
-          
+          {/* AJOUTE CE BLOC ICI : Lien vers l'Admin */}
+            <Link 
+              href="/studio" 
+              target="_blank" // Ouvre dans un nouvel onglet
+              className="hidden md:flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-conte-orange transition-colors mr-4"
+>
+              <span className="text-xs">🔒</span> Espace Admin
+            </Link>
           {/* LE BOUTON DEVIS (Bien visible) */}
           <Link href="/devis" className="bg-conte-orange text-white px-6 py-2.5 rounded-full font-bold hover:bg-orange-600 transition-transform hover:scale-105 shadow-lg flex items-center gap-2">
             <span>Demander un Devis</span>
