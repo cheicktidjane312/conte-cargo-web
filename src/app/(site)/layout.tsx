@@ -21,10 +21,10 @@ export default function RootLayout({
     <html lang="fr">
       <body className={inter.className}>
         <Header />
-        <main className="min-h-screen pt-16">
+        <FloatingWhatsApp />
+        <main className="min-h-screen pt-[40px]">
           {children}
         </main>
-        <FloatingWhatsApp />
         <Footer />
       </body>
     </html>
