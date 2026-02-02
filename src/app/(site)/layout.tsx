@@ -1,36 +1,30 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
-// 👇 C'est ICI que ça marche : on remonte d'un cran pour trouver le CSS
-import "../globals.css"; 
-
-import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
+import "../../globals.css"; // On remonte de 2 crans pour trouver le CSS
+import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header"; // J'ajoute le Header ici pour être sûr
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Conte Cargo Navires Polyvalents",
-  description: "Transit Maritime et Aérien",
+  title: "Conte Cargo - Leader du Transit",
+  description: "Expédiez vos colis de l'Europe vers l'Afrique en toute sécurité.",
 };
 
-export default function SiteLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className={inter.className}>
-        {/* Le Header s'affiche en haut */}
-        <Header /> 
-        
-        {/* Le contenu de la page */}
-        {children}
-        
-        {/* Le Footer et WhatsApp en bas */}
+    <html lang="fr">
+      <body className={inter.className}>
+        <Header />
+        <main className="min-h-screen pt-[80px]">
+          {children}
+        </main>
         <Footer />
-        <FloatingWhatsApp />
-    </div>
+      </body>
+    </html>
   );
 }

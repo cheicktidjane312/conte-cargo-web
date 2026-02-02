@@ -1,7 +1,9 @@
-export const metadata = {
-  title: 'Conte Cargo Admin',
-  description: 'Espace administration',
-}
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Conte Cargo Admin",
+  description: "Espace administration",
+};
 
 export default function RootLayout({
   children,
@@ -10,7 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body style={{ margin: 0, padding: 0 }}>{children}</body>
+      <body style={{ margin: 0, padding: 0 }}>
+        {children}
+      </body>
     </html>
-  )
+  );
 }
