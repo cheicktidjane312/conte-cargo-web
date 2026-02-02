@@ -1,22 +1,11 @@
-import { NextStudio } from 'next-sanity/studio';
-// 👇 CORRECTION : 4 ".." seulement, pas 5 !
-import config from '../../../../sanity.config';
+import { NextStudio } from 'next-sanity/studio'
+import config from '../../../../sanity.config' // 4 points = retour à la racine
 
-// 👇 DOUBLE SÉCURITÉ : On force le dynamique des deux façons possibles
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// On force le mode dynamique pour éviter que Vercel essaie de "deviner" la page
+export const dynamic = 'force-dynamic'
 
-export const metadata = {
-  title: 'Conte Cargo Admin',
-  description: 'Espace administration',
-};
-
-export const viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-};
+// Plus besoin d'exporter metadata ici, c'est géré par le nouveau layout !
 
 export default function StudioPage() {
-  return <NextStudio config={config} />;
+  return <NextStudio config={config} />
 }
