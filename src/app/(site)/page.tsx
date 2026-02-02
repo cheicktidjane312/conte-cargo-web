@@ -13,7 +13,7 @@ export default function Home() {
         <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-center">
           
           {/* Texte d'accroche */}
-          <div className="space-y-8 animate-in slide-in-from-left duration-700">
+          <div className="relative z-10 space-y-8 animate-in slide-in-from-left duration-700">
             <div className="inline-block bg-orange-100 text-conte-orange px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase">
               🚀 Leader du Transit Europe - Afrique
             </div>
