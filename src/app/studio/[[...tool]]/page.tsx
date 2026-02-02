@@ -1,10 +1,11 @@
 import { NextStudio } from 'next-sanity/studio';
-// On ajuste le chemin pour trouver sanity.config.ts qui est à la racine
-// ../../../ remonte de : [[...tool]] > studio > app > src > Racine
+// 👇 CORRECTION : 4 ".." seulement, pas 5 !
 import config from '../../../../sanity.config';
-export const dynamic = 'force-dynamic';
 
-// ✅ CORRECTION : On définit les métadonnées manuellement au lieu de les importer
+// 👇 DOUBLE SÉCURITÉ : On force le dynamique des deux façons possibles
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata = {
   title: 'Conte Cargo Admin',
   description: 'Espace administration',
