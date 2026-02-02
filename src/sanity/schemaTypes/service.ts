@@ -1,24 +1,20 @@
-import { defineField, defineType } from 'sanity'
+import { defineType, defineField } from 'sanity'
 
-export default defineType({
+export const service = defineType({
   name: 'service',
-  title: 'Nos Services (Affiches)',
+  title: 'Service',
   type: 'document',
   fields: [
     defineField({
       name: 'title',
-      title: 'Nom du Service',
+      title: 'Titre',
       type: 'string',
-      validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'poster', // C'est ce champ qui doit apparaître
-      title: 'Affiche / Créa du Service',
-      type: 'image', // Type image
-      options: {
-        hotspot: true, // Important pour le recadrage
-      },
-      validation: (rule) => rule.required(),
+      name: 'description',
+      title: 'Description',
+      type: 'text',
     }),
+    // Tu pourras ajouter d'autres champs plus tard
   ],
 })
