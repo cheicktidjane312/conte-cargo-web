@@ -2,7 +2,7 @@ import { NextStudio } from 'next-sanity/studio';
 // On ajuste le chemin pour trouver sanity.config.ts qui est à la racine
 // ../../../ remonte de : [[...tool]] > studio > app > src > Racine
 import config from '../../../../sanity.config';
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 // ✅ CORRECTION : On définit les métadonnées manuellement au lieu de les importer
 export const metadata = {
