@@ -18,3 +18,22 @@ body {
 .animate-spin-reverse {
   animation: spin-reverse 1s linear infinite;
 }
+/* ... Tes autres codes sont au dessus ... */
+
+/* 🚀 FIX ULTRA RÉACTIF : Force les clics */
+a, button {
+  position: relative; /* Permet d'utiliser z-index */
+  z-index: 30; /* Passe devant les décors (souvent z-0 ou z-10) */
+  cursor: pointer; /* Force la main */
+}
+
+/* Sauf si on a explicitement dit qu'il est désactivé */
+a:disabled, button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Petit effet "pressé" pour sentir le clic (feedback tactile) */
+a:active, button:active {
+  transform: scale(0.98);
+}

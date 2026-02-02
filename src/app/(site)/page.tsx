@@ -27,13 +27,23 @@ export default function Home() {
               De l'Italie vers le Sénégal et la Guinée. Nous transportons vos colis, véhicules et conteneurs avec sécurité et rapidité.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/devis" className="bg-conte-orange text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-orange-600 hover:scale-105 transition-all text-center">
+            {/* Les boutons "Blindés" */}
+            <div className="flex flex-col sm:flex-row gap-4 relative z-50"> {/* z-50 pour être sûr sûr ! */}
+              
+              <Link 
+                href="/devis" 
+                className="bg-conte-orange text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-orange-600 active:scale-95 transition-all text-center relative z-50"
+              >
                 Obtenir un Devis Gratuit
               </Link>
-              <Link href="/services" className="px-8 py-4 rounded-xl font-bold text-conte-blue border-2 border-conte-blue hover:bg-conte-blue hover:text-white transition-all text-center">
+              
+              <Link 
+                href="/services" 
+                className="px-8 py-4 rounded-xl font-bold text-conte-blue border-2 border-conte-blue hover:bg-conte-blue hover:text-white active:scale-95 transition-all text-center relative z-50 bg-white/50 backdrop-blur-sm"
+              >
                 Nos Tarifs & Services
               </Link>
+
             </div>
 
             <div className="flex items-center gap-6 pt-4 text-sm font-semibold text-gray-500">
