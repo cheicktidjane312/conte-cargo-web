@@ -24,7 +24,7 @@ export default function RootLayout({
         <SiteLoader />
         <Header />
         <FloatingWhatsApp />
-        <main className="min-h-screen pt-[30px]">
+        <main className="min-h-screen pt-[60px]">
           {children}
         </main>
         <Footer />

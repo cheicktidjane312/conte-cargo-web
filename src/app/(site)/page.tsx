@@ -6,7 +6,7 @@ export default function Home() {
   return (
     // 1. LE PADDING-TOP (pt-32) EST ICI
     // Il pousse le contenu vers le bas pour ne pas être caché par le Header fixe
-    <main className="flex min-h-screen flex-col pt-32">
+    <main className="flex min-h-screen flex-col p-0">
 
       {/* --- SECTION 1 : HERO (L'ACCROCHE) --- */}
       <section className="relative px-6 lg:px-12 pb-20 pt-10">
