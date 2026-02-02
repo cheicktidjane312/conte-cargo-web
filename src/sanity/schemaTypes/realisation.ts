@@ -1,7 +1,7 @@
 import { defineField, defineType } from 'sanity'
 
-export default defineType({
-  name: 'arrivage',
+export const realisation = defineType({
+    name: 'arrivage',
   title: 'Arrivages & Réalisations',
   type: 'document',
   fields: [

@@ -1,8 +1,12 @@
 import { type SchemaTypeDefinition } from 'sanity'
 
-// 👇 Maintenant que service.ts est corrigé, cette ligne va marcher (plus de rouge !)
+// Maintenant que les fichiers sont corrigés, ces imports vont marcher :
 import { service } from './service'
+import { realisation } from './realisation'
+import { contact } from './contact'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   service,
+  realisation,
+  contact,
 ]
