@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header />
         <FloatingWhatsApp />
-        <main className="min-h-screen pt-[40px]">
+        <main className="min-h-screen pt-[30px]">
           {children}
         </main>
         <Footer />
