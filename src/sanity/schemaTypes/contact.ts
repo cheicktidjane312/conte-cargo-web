@@ -40,6 +40,21 @@ export const contact = defineType({
       title: 'Lien Page Facebook',
       type: 'url',
     }),
+    defineField({
+      name: 'instagram',
+      title: 'Lien Instagram',
+      type: 'url',
+    }),
+    defineField({
+      name: 'tiktok',
+      title: 'Lien TikTok',
+      type: 'url',
+    }),
+    defineField({
+      name: 'linkedin',
+      title: 'Lien LinkedIn',
+      type: 'url',
+    }),
     // SECTION ADRESSES PHYSIQUES
     defineField({
       name: 'addresses',
@@ -64,3 +79,4 @@ export const contact = defineType({
     }),
   ],
 })
+
