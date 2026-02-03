@@ -2,7 +2,7 @@ import { defineType, defineField } from 'sanity'
 
 export const service = defineType({
   name: 'service',
-  title: 'Services', // Ce qui s'affiche dans le menu
+  title: 'Services',
   type: 'document',
   fields: [
     defineField({
@@ -10,8 +10,9 @@ export const service = defineType({
       title: 'Titre du Service',
       type: 'string',
     }),
+    // 👇 CORRECTION ICI : J'ai remis 'poster' pour matcher avec tes données
     defineField({
-      name: 'flyer',
+      name: 'poster',
       title: 'Affiche / Flyer (Image)',
       type: 'image',
       options: {
