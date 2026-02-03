@@ -1,56 +1,28 @@
-import { defineField, defineType } from 'sanity'
+import { defineType, defineField } from 'sanity'
 
 export const realisation = defineType({
-    name: 'arrivage',
+  name: 'realisation',
   title: 'Arrivages & Réalisations',
   type: 'document',
   fields: [
     defineField({
       name: 'title',
-      title: 'Titre de l\'arrivage',
+      title: 'Titre de la vidéo',
       type: 'string',
-      description: 'Ex: Arrivage du 12 Février - Conteneur GN',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'slug',
-      title: 'Slug (Lien automatique)',
-      type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96,
-      },
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'mainImage',
-      title: 'Photo Principale',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-    // C'EST ICI QUE ÇA CHANGE : TYPE FILE
-    defineField({
-      name: 'videoFile',
-      title: 'Fichier Vidéo',
-      type: 'file',
-      options: {
-        accept: 'video/*', // Accepte uniquement les fichiers vidéo (mp4, mov, etc.)
-      },
-      description: 'Télécharge la vidéo directement ici (Attention aux fichiers trop lourds pour le chargement du site).',
     }),
     defineField({
       name: 'description',
-      title: 'Description',
+      title: 'Petite description',
       type: 'text',
-      description: 'Détails sur l\'arrivage ou le chargement...',
+      rows: 3 // Pour que la case soit petite dans l'admin
     }),
     defineField({
-      name: 'publishedAt',
-      title: 'Date de publication',
-      type: 'datetime',
-      initialValue: (new Date()).toISOString(),
-    }),
+      name: 'video',
+      title: 'Fichier Vidéo',
+      type: 'file',
+      options: {
+        accept: 'video/*'
+      }
+    })
   ],
 })

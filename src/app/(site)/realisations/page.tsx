@@ -1,17 +1,18 @@
-// src/app/realisations/page.tsx
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import Header from "@/components/layout/Header";
 import Image from "next/image";
 
-// 1. REQUÊTE GROQ (On récupère aussi l'URL du fichier vidéo)
-const ARRIVAGES_QUERY = `*[_type == "arrivage"] | order(publishedAt desc) {
+// 👇 FORCE LA MISE À JOUR INSTANTANÉE
+export const revalidate = 0;
+
+// 1. REQUÊTE ADAPTÉE (On lit 'realisation' mais on sort les champs attendus par ton code)
+const ARRIVAGES_QUERY = `*[_type == "realisation"] | order(_createdAt desc) {
   _id,
   title,
-  publishedAt,
+  "publishedAt": _createdAt,
   description,
-  mainImage,
-  "videoUrl": videoFile.asset->url
+  "videoUrl": video.asset->url
 }`;
 
 // 2. TYPES
@@ -20,7 +21,7 @@ interface ArrivageDoc {
   title: string;
   publishedAt: string;
   description: string;
-  videoUrl?: string; // L'URL de la vidéo (optionnelle)
+  videoUrl?: string;
   mainImage?: {
     asset: {
       _ref: string;
@@ -75,20 +76,11 @@ export default async function RealisationsPage() {
                     <video 
                       controls 
                       className="w-full max-h-[500px] object-contain"
-                      poster={item.mainImage ? urlFor(item.mainImage).url() : undefined}
+                      // J'ai retiré le poster car on n'a pas d'image dans le schema simplifié
                     >
                       <source src={item.videoUrl} type="video/mp4" />
                       Votre navigateur ne supporte pas la lecture de vidéos.
                     </video>
-                  ) : item.mainImage ? (
-                    <div className="relative h-[400px] w-full">
-                      <Image
-                        src={urlFor(item.mainImage).url()}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
                   ) : (
                     <div className="h-48 flex items-center justify-center text-gray-500">
                       Aucun média
@@ -110,7 +102,7 @@ export default async function RealisationsPage() {
         ) : (
           <div className="text-center py-20 text-gray-500 bg-white rounded-xl shadow p-10">
             <p className="text-xl">🚀 Aucun arrivage publié pour le moment.</p>
-            <p className="mt-2 text-sm">Revenez bientôt pour voir nos premières vidéos !</p>
+            <p className="mt-2 text-sm">Allez dans le Studio pour ajouter votre première vidéo !</p>
           </div>
         )}
       </section>
