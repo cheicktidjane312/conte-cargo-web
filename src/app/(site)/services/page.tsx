@@ -32,17 +32,16 @@ export default async function ServicesPage() {
             key={service._id} 
             className="group overflow-hidden rounded-xl bg-white shadow-lg transition-all hover:shadow-xl"
           >
-            {/* Image du Service (Flyer/Poster) */}
-            <div className="relative h-64 w-full overflow-hidden bg-gray-100">
+            <div className="relative aspect-[3/4] w-full bg-gray-50">
               {service.imageUrl ? (
                 <Image
                   src={service.imageUrl}
                   alt={service.title}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  // 👇 "contain" affiche l'image ENTIÈRE sans couper les bords
+                  className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (
-                // Image par défaut si pas de poster
                 <div className="flex h-full items-center justify-center text-gray-400">
                   Pas d'image
                 </div>
