@@ -1,33 +1,26 @@
 import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
 import Header from "@/components/layout/Header";
-import Image from "next/image";
+import { VideoOff } from "lucide-react"; // J'ajoute une icône pour le cas où il n'y a pas de vidéo
 
 // 👇 FORCE LA MISE À JOUR INSTANTANÉE
 export const revalidate = 0;
 
-// 1. REQUÊTE ADAPTÉE (On lit 'realisation' mais on sort les champs attendus par ton code)
-const ARRIVAGES_QUERY = `*[_type == "realisation"] | order(_createdAt desc) {
+// 1. REQUÊTE CORRIGÉE (Correspond à ton schema realisation.ts)
+const REALISATIONS_QUERY = `*[_type == "realisation"] | order(_createdAt desc) {
   _id,
   title,
-  "publishedAt": _createdAt,
   description,
-  "videoUrl": video.asset->url
+  "publishedAt": _createdAt, // On utilise la date de création automatique du système
+  "videoUrl": video.asset->url // On récupère l'URL du fichier vidéo
 }`;
 
-// 2. TYPES
-interface ArrivageDoc {
+// 2. TYPES (Strictement basés sur ton schema)
+interface RealisationDoc {
   _id: string;
   title: string;
-  publishedAt: string;
   description: string;
+  publishedAt: string;
   videoUrl?: string;
-  mainImage?: {
-    asset: {
-      _ref: string;
-      _type: string;
-    };
-  };
 }
 
 export const metadata = {
@@ -36,7 +29,7 @@ export const metadata = {
 };
 
 export default async function RealisationsPage() {
-  const arrivages: ArrivageDoc[] = await client.fetch(ARRIVAGES_QUERY);
+  const realisations: RealisationDoc[] = await client.fetch(REALISATIONS_QUERY);
 
   return (
     <main className="min-h-screen bg-slate-50">
@@ -52,13 +45,13 @@ export default async function RealisationsPage() {
 
       {/* FIL D'ACTUALITÉ */}
       <section className="container mx-auto px-4 py-16 max-w-4xl">
-        {arrivages.length > 0 ? (
+        {realisations.length > 0 ? (
           <div className="space-y-16">
-            {arrivages.map((item) => (
+            {realisations.map((item) => (
               <article key={item._id} className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
                 
                 {/* EN-TÊTE DU POST */}
-                <div className="p-6 border-b border-gray-50 flex justify-between items-center">
+                <div className="p-6 border-b border-gray-50 flex justify-between items-center flex-wrap gap-4">
                   <div>
                     <h2 className="text-2xl font-bold text-conte-blue">{item.title}</h2>
                     <p className="text-sm text-gray-400 mt-1">
@@ -70,28 +63,30 @@ export default async function RealisationsPage() {
                   </div>
                 </div>
 
-                {/* MEDIA (VIDÉO OU PHOTO) */}
-                <div className="w-full bg-black">
+                {/* MEDIA (VIDÉO UNIQUEMENT) */}
+                <div className="w-full bg-black aspect-video flex items-center justify-center">
                   {item.videoUrl ? (
                     <video 
                       controls 
-                      className="w-full max-h-[500px] object-contain"
-                      // J'ai retiré le poster car on n'a pas d'image dans le schema simplifié
+                      className="w-full h-full object-contain"
+                      playsInline
+                      preload="metadata"
                     >
                       <source src={item.videoUrl} type="video/mp4" />
                       Votre navigateur ne supporte pas la lecture de vidéos.
                     </video>
                   ) : (
-                    <div className="h-48 flex items-center justify-center text-gray-500">
-                      Aucun média
+                    <div className="flex flex-col items-center text-gray-500">
+                      <VideoOff size={48} className="mb-2 opacity-50" />
+                      <p>Vidéo en cours de traitement</p>
                     </div>
                   )}
                 </div>
 
                 {/* DESCRIPTION */}
                 {item.description && (
-                  <div className="p-6 bg-gray-50">
-                    <p className="text-gray-700 leading-relaxed">
+                  <div className="p-6 bg-gray-50 border-t border-gray-100">
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
                       {item.description}
                     </p>
                   </div>
@@ -102,7 +97,6 @@ export default async function RealisationsPage() {
         ) : (
           <div className="text-center py-20 text-gray-500 bg-white rounded-xl shadow p-10">
             <p className="text-xl">🚀 Aucun arrivage publié pour le moment.</p>
-            <p className="mt-2 text-sm">Allez dans le Studio pour ajouter votre première vidéo !</p>
           </div>
         )}
       </section>
