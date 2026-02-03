@@ -1,80 +1,73 @@
-// src/app/services/page.tsx
 import { client } from "@/sanity/lib/client";
-import ServiceCard from "@/components/ui/ServiceCard";
-import Header from "@/components/layout/Header";
+import Image from "next/image";
 
-// Requête GROQ
-const SERVICES_QUERY = `*[_type == "service"] | order(_createdAt desc) {
-  _id,
-  title,
-  poster
-}`;
+// 👇 C'est LA ligne magique : 0 = Pas de cache, mise à jour instantanée
+export const revalidate = 0; 
 
-interface ServiceDoc {
-  _id: string;
-  title: string;
-  poster: {
-    asset: {
-      _ref: string;
-      _type: string;
-    };
-  };
+async function getServices() {
+  // On récupère le titre, la description et l'URL de l'image (poster)
+  const query = `*[_type == "service"] | order(_createdAt desc) {
+    _id,
+    title,
+    description,
+    "imageUrl": poster.asset->url 
+  }`;
+  
+  return await client.fetch(query);
 }
 
-export const metadata = {
-  title: "Nos Services de Transit | Conte Cargo",
-  description: "Découvrez nos solutions de transport maritime, aérien et GP.",
-};
-
 export default async function ServicesPage() {
-  let services: ServiceDoc[] = [];
-  let errorMsg = "";
-
-  // ON SÉCURISE LA CONNEXION ICI
-  try {
-    services = await client.fetch(SERVICES_QUERY);
-  } catch (error) {
-    console.error("Erreur Sanity:", error);
-    errorMsg = "Erreur de connexion à la base de données.";
-  }
+  const services = await getServices();
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      <Header />
-      
-      <div className="bg-conte-blue pt-32 pb-16 px-4 text-center text-white">
-        <h1 className="text-4xl font-bold mb-4">Nos Solutions Logistiques</h1>
-        <p className="text-gray-300 max-w-2xl mx-auto">
-          Des services adaptés à vos besoins.
-        </p>
+    <div className="container mx-auto min-h-screen px-4 py-12">
+      <h1 className="mb-12 text-center text-4xl font-bold text-gray-800">
+        Nos Services
+      </h1>
+
+      {/* Grille des services */}
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {services.map((service: any) => (
+          <div 
+            key={service._id} 
+            className="group overflow-hidden rounded-xl bg-white shadow-lg transition-all hover:shadow-xl"
+          >
+            {/* Image du Service (Flyer/Poster) */}
+            <div className="relative h-64 w-full overflow-hidden bg-gray-100">
+              {service.imageUrl ? (
+                <Image
+                  src={service.imageUrl}
+                  alt={service.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              ) : (
+                // Image par défaut si pas de poster
+                <div className="flex h-full items-center justify-center text-gray-400">
+                  Pas d'image
+                </div>
+              )}
+            </div>
+
+            {/* Contenu */}
+            <div className="p-6">
+              <h3 className="mb-3 text-xl font-bold text-blue-900">
+                {service.title}
+              </h3>
+              <p className="text-gray-600 line-clamp-3">
+                {service.description}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
 
-      <section className="container mx-auto px-4 py-16">
-        {/* Affichage des erreurs si besoin */}
-        {errorMsg && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 text-center">
-                <p>⚠️ {errorMsg}</p>
-                <p className="text-sm">Vérifiez votre terminal.</p>
-            </div>
-        )}
-
-        {services.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service) => (
-              <ServiceCard 
-                key={service._id} 
-                title={service.title} 
-                image={service.poster} 
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 text-gray-500">
-            {!errorMsg && <p>Aucun service affiché pour le moment.</p>}
-          </div>
-        )}
-      </section>
-
-    </main>
+      {/* Message si aucun service */}
+      {services.length === 0 && (
+        <p className="text-center text-gray-500">
+          Aucun service disponible pour le moment.
+        </p>
+      )}
+    </div>
   );
 }
