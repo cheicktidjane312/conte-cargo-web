@@ -1,20 +1,19 @@
 import { client } from "@/sanity/lib/client";
 import Header from "@/components/layout/Header";
-import { VideoOff } from "lucide-react"; // J'ajoute une icône pour le cas où il n'y a pas de vidéo
+import { VideoOff } from "lucide-react";
 
-// 👇 FORCE LA MISE À JOUR INSTANTANÉE
+// 👇 ACTUALISATION INSTANTANÉE
 export const revalidate = 0;
 
-// 1. REQUÊTE CORRIGÉE (Correspond à ton schema realisation.ts)
+// REQUÊTE
 const REALISATIONS_QUERY = `*[_type == "realisation"] | order(_createdAt desc) {
   _id,
   title,
   description,
-  "publishedAt": _createdAt, // On utilise la date de création automatique du système
-  "videoUrl": video.asset->url // On récupère l'URL du fichier vidéo
+  "publishedAt": _createdAt,
+  "videoUrl": video.asset->url
 }`;
 
-// 2. TYPES (Strictement basés sur ton schema)
 interface RealisationDoc {
   _id: string;
   title: string;
@@ -63,12 +62,17 @@ export default async function RealisationsPage() {
                   </div>
                 </div>
 
-                {/* MEDIA (VIDÉO UNIQUEMENT) */}
-                <div className="w-full bg-black aspect-video flex items-center justify-center">
+                {/* 👇 MODIFICATION ICI : MEDIA ADAPTATIF */}
+                {/* On enlève 'aspect-video'. On met un fond noir et on centre. */}
+                <div className="w-full bg-black flex justify-center items-center">
                   {item.videoUrl ? (
                     <video 
                       controls 
-                      className="w-full h-full object-contain"
+                      className="max-w-full max-h-[80vh] w-auto h-auto" 
+                      // 👆 EXPLICATION : 
+                      // max-w-full : Ne déborde pas en largeur
+                      // max-h-[80vh] : Ne prend pas plus de 80% de la hauteur de l'écran (évite le scroll infini sur les vidéos verticales)
+                      // w-auto h-auto : Garde le ratio d'origine
                       playsInline
                       preload="metadata"
                     >
@@ -76,7 +80,7 @@ export default async function RealisationsPage() {
                       Votre navigateur ne supporte pas la lecture de vidéos.
                     </video>
                   ) : (
-                    <div className="flex flex-col items-center text-gray-500">
+                    <div className="flex flex-col items-center justify-center py-20 text-gray-500">
                       <VideoOff size={48} className="mb-2 opacity-50" />
                       <p>Vidéo en cours de traitement</p>
                     </div>
@@ -97,6 +101,7 @@ export default async function RealisationsPage() {
         ) : (
           <div className="text-center py-20 text-gray-500 bg-white rounded-xl shadow p-10">
             <p className="text-xl">🚀 Aucun arrivage publié pour le moment.</p>
+            <p className="mt-2 text-sm">Allez dans le Studio pour ajouter votre première vidéo !</p>
           </div>
         )}
       </section>
