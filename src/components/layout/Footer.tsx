@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="text-xl font-bold text-conte-orange">Conte Cargo</h3>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Votre partenaire de confiance pour le transit maritime et aérien entre l'Europe et l'Afrique. Sécurité, rapidité et transparence.
+              Votre partenaire de confiance pour le transit maritime et aérien entre l'Asie, l'Europe l'Afrique et l'Amérique. Sécurité, rapidité et transparence.
             </p>
           </div>
 

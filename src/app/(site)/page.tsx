@@ -15,7 +15,7 @@ export default function Home() {
           {/* Texte d'accroche */}
           <div className="relative z-10 space-y-8 animate-in slide-in-from-left duration-700">
             <div className="inline-block bg-orange-100 text-conte-orange px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase">
-              🚀 Leader du Transit Europe - Afrique
+              🚀 Leader du Transit Asie - Europe - Afrique - Amérique
             </div>
             <h1 className="text-5xl lg:text-7xl font-extrabold text-conte-blue leading-tight">
               Expédiez sans <br/>
@@ -24,7 +24,8 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-              De l'Italie vers le Sénégal et la Guinée. Nous transportons vos colis, véhicules et conteneurs avec sécurité et rapidité.
+               Nous transportons vos colis, véhicules et conteneurs avec sécurité et rapidité. Leader du transit de l’Asie, des pays du golfs, du moyen orient, des Etats Unis au Canada en passant par l'Europe et l'Afrique.
+
             </p>
             
             {/* Les boutons "Blindés" */}
