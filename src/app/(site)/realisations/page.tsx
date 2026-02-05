@@ -62,17 +62,12 @@ export default async function RealisationsPage() {
                   </div>
                 </div>
 
-                {/* 👇 MODIFICATION ICI : MEDIA ADAPTATIF */}
-                {/* On enlève 'aspect-video'. On met un fond noir et on centre. */}
-                <div className="w-full bg-black flex justify-center items-center">
+                {/* 👇 MODIFICATION ICI : Fond Bleu Marine (site) au lieu de Noir */}
+                <div className="w-full bg-blue-950 flex justify-center items-center">
                   {item.videoUrl ? (
                     <video 
                       controls 
                       className="max-w-full max-h-[80vh] w-auto h-auto" 
-                      // 👆 EXPLICATION : 
-                      // max-w-full : Ne déborde pas en largeur
-                      // max-h-[80vh] : Ne prend pas plus de 80% de la hauteur de l'écran (évite le scroll infini sur les vidéos verticales)
-                      // w-auto h-auto : Garde le ratio d'origine
                       playsInline
                       preload="metadata"
                     >
