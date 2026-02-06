@@ -24,7 +24,7 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-               Nous transportons vos colis, véhicules et conteneurs avec sécurité et rapidité. Leader du transit de l’Asie, des pays du golfs, du moyen orient, des Etats Unis au Canada en passant par l'Europe et l'Afrique.
+               Nous transportons vos colis, véhicules et conteneurs avec sécurité et rapidité. Leader du transit de l’Asie, des pays du golf, du moyen orient, des Etats Unis au Canada en passant par l'Europe et l'Afrique.
 
             </p>
             
