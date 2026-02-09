@@ -1,8 +1,15 @@
-// src/components/layout/Footer.tsx
 import Link from 'next/link';
-import { Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Video } from 'lucide-react'; // J'ai ajouté Video pour TikTok
+import { client } from "@/sanity/lib/client";
 
-export default function Footer() {
+export default async function Footer() {
+  // 1. On récupère les liens depuis Sanity (sans cache pour l'instant)
+  const socials = await client.fetch(
+    `*[_type == "contactInfo"][0] { facebook, instagram, linkedin, tiktok }`,
+    {},
+    { next: { revalidate: 0 } }
+  ) || {};
+
   return (
     <footer className="bg-conte-blue text-white pt-16 pb-8 border-t border-white/10">
       <div className="container mx-auto px-4">
@@ -38,20 +45,44 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* COLONNE 4 : SUIVEZ-NOUS */}
+          {/* COLONNE 4 : SUIVEZ-NOUS (DYNAMIQUE) */}
           <div>
             <h4 className="font-bold mb-4">Réseaux Sociaux</h4>
             <div className="flex gap-4">
-              <a href="https://www.facebook.com/share/1WTTeErvUX/?mibextid=wwXIfr" target="_blank" className="bg-white/10 p-2 rounded-full hover:bg-conte-orange transition">
-                <Facebook size={20} />
-              </a>
-              {/* Tu pourras ajouter les autres liens plus tard */}
-              <div className="bg-white/5 p-2 rounded-full opacity-50 cursor-not-allowed">
-                <Instagram size={20} />
-              </div>
-              <div className="bg-white/5 p-2 rounded-full opacity-50 cursor-not-allowed">
-                <Linkedin size={20} />
-              </div>
+              
+              {/* FACEBOOK */}
+              {socials.facebook && (
+                <a href={socials.facebook} target="_blank" rel="noopener noreferrer" className="bg-white/10 p-2 rounded-full hover:bg-[#1877F2] transition">
+                  <Facebook size={20} />
+                </a>
+              )}
+
+              {/* INSTAGRAM */}
+              {socials.instagram && (
+                <a href={socials.instagram} target="_blank" rel="noopener noreferrer" className="bg-white/10 p-2 rounded-full hover:bg-[#E4405F] transition">
+                  <Instagram size={20} />
+                </a>
+              )}
+
+              {/* LINKEDIN */}
+              {socials.linkedin && (
+                <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" className="bg-white/10 p-2 rounded-full hover:bg-[#0A66C2] transition">
+                  <Linkedin size={20} />
+                </a>
+              )}
+
+              {/* TIKTOK */}
+              {socials.tiktok && (
+                <a href={socials.tiktok} target="_blank" rel="noopener noreferrer" className="bg-white/10 p-2 rounded-full hover:bg-black transition">
+                  <Video size={20} />
+                </a>
+              )}
+
+              {/* Message si aucun réseau n'est configuré */}
+              {!socials.facebook && !socials.instagram && !socials.linkedin && !socials.tiktok && (
+                 <span className="text-gray-500 text-xs italic">Non configuré</span>
+              )}
+
             </div>
           </div>
 
@@ -62,17 +93,17 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} Conte Cargo Navires Polyvalents. Tous droits réservés.</p>
           <p className="mt-2">
             Conçu avec fierté par{" "}
-            <a // On utilise <a> ici pour un lien externe (hors du site)
-              href="https://www.fierlah-agency.com" // <--- METS TON LIEN ICI
-              target="_blank" // Ouvre dans un nouvel onglet
-              rel="noopener noreferrer" // Sécurité pour les liens externes
+            <a 
+              href="https://www.fierlah-agency.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-conte-orange font-bold hover:underline"
             >
               FIERLAH AGENCY
             </a>
           </p>
         </div>
-        </div>
+      </div>
     </footer>
   );
 }
